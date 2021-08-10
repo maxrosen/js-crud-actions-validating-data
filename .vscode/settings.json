@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/4a8d8155-fd18-4ea2-b11f-7bda00793d52/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/room2DemoApp",
+    "appService.deploySubpath": "."
+}
