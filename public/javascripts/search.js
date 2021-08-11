@@ -1,4 +1,4 @@
-document.getElementById("search").onclick = function () {
+document.getElementById("search").onclick = function search () {
   var textValue = document.getElementById("search-terms").value;
   var priceValue = document.getElementById("price").value;
   var colorValue = document.getElementById("color").value;
