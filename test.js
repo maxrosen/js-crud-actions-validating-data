@@ -1,14 +1,11 @@
-let expect = require('chai').expect;
 let sinon = require('sinon');
-var nock   = require('nock');
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-const { assert } = require('chai');
-const { request } = require('express');
-let db = require('./db');
-let server = require('./routes/products.js');
-let should = chai.should();
 let app = require('./app.js');
+let assert = require('chai').assert;
+let should = require('chai').should();
+let expect = require('chai').expect;
+
  
 chai.use(chaiHttp);
 describe('MyAPI', function() {
@@ -43,6 +40,34 @@ describe('MyAPI', function() {
         .end((err, res) => {
             res.should.have.status(200);
             res.body[0].name.should.be.eq("Essential Backpack")
+            done();
+        });   
+  });
+
+  it('should get valid response with empty response body', (done) => {
+    chai.request(app)
+        .get('/api/products/search?keywords=dfhfdgdfff')
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.eql([]);
+            done();
+        });   
+  });
+
+  it('should get 404 for response that does not exist', (done) => {
+    chai.request(app)
+        .get('/api/products/abc')
+        .end((err, res) => {
+            res.should.have.status(404);
+            done();
+        });   
+  });
+
+  it('should get 500 for invalid search parameters', (done) => {
+    chai.request(app)
+        .get('/api/products/search?keys=Back')
+        .end((err, res) => {
+            res.should.have.status(500);
             done();
         });   
   });
