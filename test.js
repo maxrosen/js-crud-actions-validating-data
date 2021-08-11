@@ -37,11 +37,12 @@ describe('MyAPI', function() {
     done();
   });
 
-  it('should parse the fetched response data as JSON', (done) => {
+  it('should get valid JSON response and have Essential Backpack as the first item', (done) => {
     chai.request(app)
-        .get('/search')
+        .get('/api/products/search?keywords=Back')
         .end((err, res) => {
             res.should.have.status(200);
+            res.body[0].name.should.be.eq("Essential Backpack")
             done();
         });   
   });
