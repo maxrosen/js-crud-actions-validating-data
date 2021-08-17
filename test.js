@@ -6,8 +6,8 @@ let assert = require('chai').assert;
 let should = require('chai').should();
 let expect = require('chai').expect;
 
- 
 chai.use(chaiHttp);
+
 describe('MyAPI', function() {
   beforeEach(function() {
     this.xhr = sinon.useFakeXMLHttpRequest();
@@ -21,7 +21,7 @@ describe('MyAPI', function() {
   afterEach(function() {
     this.xhr.restore();
   });
- 
+
   //Tests etc. go here
 
   it('should be true', () => {
@@ -39,7 +39,7 @@ describe('MyAPI', function() {
         .get('/api/products/search?keywords=Back')
         .end((err, res) => {
             res.should.have.status(200);
-            res.body[0].name.should.be.eq("Essential Backpack")
+            res.body[0].name.should.be.eq("Essential Backpack");
             done();
         });   
   });

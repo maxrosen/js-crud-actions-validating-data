@@ -7,6 +7,50 @@ const low = require("lowdb");
 const lodashId = require("lodash-id");
 const FileSync = require("lowdb/adapters/FileSync");
 
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('products', 'root', 'secure_password', {
+  host: 'localhost',
+  dialect: 'mysql'
+});
+
+const Products = sequelize.define('catalogs', {
+  // Model attributes are defined here
+  name: {
+    type: DataTypes.STRING,
+  },
+  price: {
+    type: DataTypes.FLOAT
+  },
+  quantity: {
+    type: DataTypes.INTEGER
+  }, 
+  color: {
+    type: DataTypes.STRING
+  }, 
+  id: {
+    type: DataTypes.STRING,
+    allowNull: false, 
+    primaryKey: true 
+  }, 
+  description: {
+    type: DataTypes.TEXT
+  }
+});
+
+async function connectAndSync() {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+    await sequelize.sync();
+    console.log("All models were synchronized successfully.");
+    console.log(await Products.findAll());
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+connectAndSync();
+
 const adapter = new FileSync("db.json");
 const db = low(adapter);
 db._.mixin(lodashId);
